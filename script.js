@@ -1,19 +1,23 @@
 const w = window.innerWidth,
       h = window.innerHeight;
-var placingBlocks = ['url(img/block.png)',
-                     'url(img/ocr.jpg)',
+var placingBlocks = ['url(img/tnt.png)',
+                     'url(img/planks.jpg)',
                      'url(img/diamond.png)',
                      'url(img/redstone.jpg)',
                     'url(img/ruby.jpg)',
                     'url(img/stoneyet.png)',
                     'url(img/stone.png)',
                     'url(img/grass.png)',
-                    'url(img/iron.png)',
+                    'url(img/bricks.png)',
                     'url(img/magma.jpg)',
                     'url(img/pumpkin.png)',
                     'url(img/glass.png)',
                     'url(img/log.png)',
-                    'url(img/dirt.png)']
+                    'url(img/dirt.png)',
+                    'url(img/door_b.png)',
+                    'url(img/door_t.png)']
+
+var blockIcons = ['tnt.png', 'planks.jpg', 'diamond.png', 'redstone.jpg', 'ruby.jpg', 'stoneyet.png', 'stone.png', 'grass.png', 'bricks.png', 'magma.jpg', 'pumpkin.png', 'glass.png', 'log.png', 'dirt.png', 'door.png']
 
 var backGrounds = ['linear-gradient(50deg, red, cyan)', 
                   'linear-gradient(50deg, #ffffff, cyan)',
@@ -55,10 +59,26 @@ choise.style.setProperty('--width', rowValue)
 choise.style.setProperty('--height', columnValue)
 
 function placeBlock() {
-    let bg = getComputedStyle(choise).background
-
-    this.style.setProperty('--img',  bg);
-    this.style.opacity = 1;
+    let bg = body.getAttribute("curentBlock");
+    
+    
+    if (bg == 'door.png') {
+        function placeDoor(e){
+            e.style.setProperty('--img',  `url(img/door_b.png)`);
+            let second = parseInt(e.getAttribute('number'))-16;
+            container.children[second].style.setProperty('--img', `url(img/door_t.png)`);
+            e.style.opacity = 1;
+            container.children[second].style.opacity = 1;
+        }
+        q = this.getAttribute('number') > 15
+        q ? placeDoor(this) : showText("Невозможно установить дверь (Слишком низко)", 3);
+    }
+    
+    else {
+        this.style.setProperty('--img',  `url(img/${bg})`);
+        this.style.opacity = 1;
+    }
+    
 }
 
 function choiseBlock() 
@@ -75,6 +95,19 @@ function choiseBlock()
         break;
 }};
 
+function showText(text, time) 
+{
+    document.querySelector("h2").style.opacity = 1;
+    document.querySelector("h2").innerHTML = text;
+    setTimeout(function() {(document.querySelector("h2").style.opacity = 0)}, time*1000);
+}
+
+function changeCurentBlock(block) 
+{
+    body.setAttribute('curentBlock', block)
+    choise.setProperty('--img', `url(img/${block})`);
+}
+
 function changeDegree()
 {
     if (containerWrapper.getAttribute("state")==1) //на второй план
@@ -84,9 +117,7 @@ function changeDegree()
         container.style.opacity = 0.3
         containerWrapper.setAttribute("state", 2);
         
-        document.querySelector("h2").style.opacity = 1;
-        document.querySelector("h2").innerHTML = "Выбран задний план";
-        setTimeout(function() {(document.querySelector("h2").style.opacity = 0)}, 1000);
+        showText("Выбран задний план", 1)
     }
     else // на первый план
     {
@@ -95,9 +126,7 @@ function changeDegree()
         container.style.opacity = 1
         containerWrapper.setAttribute("state", 1);
         
-        document.querySelector("h2").style.opacity = 1;
-        document.querySelector("h2").innerHTML = "Выбран передний план";
-        setTimeout(function() {(document.querySelector("h2").style.opacity = 0)}, 1000);
+        showText("Выбран передний план", 1)
     }
 }
 
@@ -128,6 +157,7 @@ while (i < amount) {
     I[i].addEventListener('contextmenu', placeBlock)
 
     I[i].style.opacity = 0;
+    I[i].setAttribute("number", i)
     
     i++
 }
@@ -153,20 +183,23 @@ while (m < amount) {
     M[m].addEventListener('contextmenu', placeBlock)
     
     M[m].style.opacity = 0;
+    M[m].setAttribute("number", i)
     
     m++
 }
 
-for (let i = 0; i <= placingBlocks.length; i++) 
+for (let i = 0; i < blockIcons.length; i++) 
 {
     let drop = document.createElement('p');
     blockListElement.appendChild(drop);
-    let blockList = document.querySelectorAll('p');
 
-    blockListElement.childNodes[i].style.setProperty('--img', placingBlocks[i])    
+    blockListElement.childNodes[i].style.setProperty('--img', `url(img/${blockIcons[i]})`)
+    blockListElement.childNodes[i].setAttribute('curentBlock', blockIcons[i])
 }
 
 blockListElement.childNodes.forEach(e => e.addEventListener('click', function(e) {
-    choise.style.setProperty('--img', getComputedStyle(this).background);
-    choiseBlock()
+    r = this.getAttribute('curentBlock')
+    body.setAttribute('curentBlock', r);
+    choise.style.setProperty('--img', r);
+    choiseBlock() //close menu
 }))

@@ -6,6 +6,12 @@ body, html {
     margin: 0;
 }
 
+body {
+    --width: 0px;
+    --height: 0px;
+    --img: 'url(img/stone.png)';
+}
+
 .container {
     top: 0;
     left: 0;
@@ -91,7 +97,8 @@ h2 {
     padding: 0;
     margin: 0;
     background: var(--img);
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .blockList p:hover {
@@ -121,12 +128,6 @@ h2 {
     color: antiquewhite;
 }
 
-body {
-    --width: 0px;
-    --height: 0px;
-    --img: url(img/stone.png)
-}
-
 i {
     width: var(--width);
     height: var(--height);
@@ -134,7 +135,6 @@ i {
     display: block;
     background-size: var(--width) var(--height);
     transition: .1s;
-    box-sizing: border-box;
 }
 
 k {
@@ -157,12 +157,12 @@ k {
 }
 
 i:hover {
-    transform: scale(1.1);
+    outline: 5px solid #c8c8ff;
     animation: anime .8s infinite linear;
 }
 
 k:hover {
-    transform: scale(1.1);
+    outline: 5px solid #c8c8ff;
     animation: anime .8s infinite linear;
 }
 
