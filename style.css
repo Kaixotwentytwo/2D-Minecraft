@@ -1,0 +1,202 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    background: var(--font);
+    overflow: hidden;
+    margin: 0;
+}
+
+body {
+    --width: 0px;
+    --height: 0px;
+    --img: 'url(img/stone.png)';
+}
+
+.container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    position: relative;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+.backGroundContainer {
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    position: relative;
+    flex-wrap: wrap;
+    z-index: 0;
+    filter: brightness(0.5);
+}
+
+h2 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 3000;
+    color:black;
+    width: max-content;
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    opacity: 0;
+    color: #0f0f0f;
+    text-shadow: 2px 2px 0px white, -2px -2px 0px white, -2px 2px 0px white, 2px -2px 0px white;
+    transition: .5s ease-out;
+}
+
+.containerWrapper {
+    width: 100%;
+    height: 100%;
+}
+
+[draggable=true] {
+  cursor: move;
+}
+
+.blockMenu {
+    resize: both;
+    overflow: auto;
+    min-width: 200px;
+    min-height: 200px;
+    width: 400px;
+    height: 400px;
+    left: 5vw;
+    top: 5vh;
+    background: rgb(70, 70, 70);
+    z-index: -1000;
+    opacity: 0;
+    position: absolute;
+}
+
+.blockList {
+    display: -webkit-inline-flex;
+    display: -moz-inline-flex;
+    display: -ms-inline-flex;
+    display: -o-inline-flex;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    width: calc(100% - 10px);
+    height: fit-content;
+    padding-left: 10px;
+    gap: 10px;
+}
+
+.blockList p {
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    z-index: 2300;
+    padding: 0;
+    margin: 0;
+    background: var(--img);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.blockList p:hover {
+    outline: 5px solid #c8c8ff;
+}
+
+.drag {
+    width: 100%;
+    height: 40px;
+    background: #909090;
+    outline: 4px solid #dddddd;
+    cursor: move;
+    text-align: center;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.drag * {
+    font-size: 1em;
+    position: absolute;
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    color: antiquewhite;
+}
+
+i {
+    width: var(--width);
+    height: var(--height);
+    background: var(--img); 
+    display: block;
+    background-size: var(--width) var(--height);
+    transition: .1s;
+}
+
+k {
+    width: var(--width);
+    height: var(--height);
+    background: var(--img); 
+    display: block;
+    background-size: var(--width) var(--height);
+    transition: .1s;
+    box-sizing: border-box;
+}
+
+@keyframes anime {
+    0%, 100% {
+        filter: brightness(1.3);
+    }
+    50% {
+        filter: none;
+    }
+}
+
+i:hover {
+    outline: 5px solid #c8c8ff;
+    animation: anime .8s infinite linear;
+}
+
+k:hover {
+    outline: 5px solid #c8c8ff;
+    animation: anime .8s infinite linear;
+}
+
+.choise {
+    position: absolute;
+    left: 2%;
+    bottom: 2%;
+    background: var(--img);
+    width: var(--width);
+    height: var(--height);
+    background-size: var(--width) var(--height);
+    z-index: 2000;
+    border: 3px double black;
+    opacity: 0.2;
+    transition: 0.5s ease-in;
+}
+
+.text {
+    font-size: 2em;
+    position: absolute;
+    left: 110%;
+    width: max-content;
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    opacity: 0;
+    color: #0f0f0f;
+    text-shadow: 2px 2px 0px white, -2px -2px 0px white, -2px 2px 0px white, 2px -2px 0px white;
+    transition: .5s ease-out;
+    top: 0%;
+}
+
+.choise:hover {
+    opacity: 1;
+}
+
+.choise:hover .text{
+    opacity: 1;
+}
